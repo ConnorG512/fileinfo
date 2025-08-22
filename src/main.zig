@@ -3,19 +3,20 @@ const std = @import("std");
 const CommandParser = @import("command-parser.zig").CommandParser;
 const ActivatedFlags = @import("command-parser.zig").ActivatedFlags;
 const FlagList = @import("command-parser.zig").AvailableFlags;
-const StdOutWriter = @import("stdout-writer.zig").StdOutWriter;
-const FileOpen = @import("file-open.zig").FileOpen;
+const FileStats = @import("file-stats.zig").FileStats;
+const FileMath = @import("file-size-math.zig").FileMath;
 
 pub fn main() !void {
 
     CommandParser.calculateArgumentNum() catch |err| {
         switch (err) {
             error.ReachedMaxArgCount => {
-                try StdOutWriter.writeMessage("Too many flags provided!");
+                try std.io.getStdOut().writer().print("Too many flags provided!", .{});
                 return err;
             },
             error.TooLittleArgumentsProvided => {
-                try StdOutWriter.writeMessage("Not Enough flags provided! See \"--flags\" for options.");
+                try std.io.getStdOut().writer().print(
+                    "Not Enough flags provided! See \"--flags\" for options.", .{});
                 return err;
             },
             else => {},
@@ -29,15 +30,21 @@ pub fn main() !void {
     if (activated_flags.help == 1) {
         const flag_list: FlagList = .{};
 
-        try StdOutWriter.writeMessage("Available commands:");
-        try StdOutWriter.writeMessage(flag_list.help);
-        try StdOutWriter.writeMessage(flag_list.help_short);
-        try StdOutWriter.writeMessage(flag_list.version);
+        try std.io.getStdOut().writer().print("Available commands:\n", .{});
+        try std.io.getStdOut().writer().print("\t{s} {s}\n", .{flag_list.help_short, flag_list.help});
+        try std.io.getStdOut().writer().print("\t{s}\n", .{flag_list.version});
     }
     if (activated_flags.open == 1) {
         var file_stat: std.os.linux.Stat = undefined;
-        try FileOpen.openFile(&file_stat);
 
-        std.log.debug("File size: {d}", .{file_stat.size});
+        try FileStats.openFile(&file_stat);
+
+        var file_size: FileMath = .{ .bytes = @intCast(file_stat.size) };
+        file_size.calculateFileSize();
+
+        try std.io.getStdOut().writer().print("File Properties:\n", .{});
+        try std.io.getStdOut().writer().print("Size (Bytes): {d}\n", .{file_size.bytes});
+        try std.io.getStdOut().writer().print("Size (KiB): {d}\n", .{file_size.kib});
+        try std.io.getStdOut().writer().print("Size (MiB): {d}\n", .{file_size.mib});
     }
 }
