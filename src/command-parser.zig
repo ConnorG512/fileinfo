@@ -6,10 +6,16 @@ const ParserError = error {
     UnknownFlag,
 };
 
+pub const AvailableFlags = struct {
+    help: []const u8 = "--help",
+    help_short: []const u8 = "-h",
+    version: []const u8 = "--version",
+};
+
 pub const ActivatedFlags = packed struct {
     help: u1 = 0,
-    flags: u1 = 0,
     version: u1 = 0,
+    open: u1 = 0,
 };
 
 pub const CommandParser = struct {
@@ -28,39 +34,31 @@ pub const CommandParser = struct {
         }
     }
 
-    pub fn parseCommandFlags(active_flags: *ActivatedFlags) !void {
-        const flag_strings = comptime [_][]const u8 {
-            "--help",     // 0 
-            "-h",         // 1
-            "--flags",    // 2
-            "-f",         // 3
-            "--version",  // 4
-        };
+    pub fn parseCommandFlags(active_flags: *ActivatedFlags) void {
+        const flag_list: AvailableFlags = .{};
 
-        for (std.os.argv) |flag| {
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[0])) {
-                std.log.debug("Called: {s}", .{flag_strings[0]});
-                active_flags.*.help = 1;
-            }
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[1])) {
-                std.log.debug("Called: {s}", .{flag_strings[1]});
-                active_flags.*.help = 1;
-            }
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[2])) {
-                std.log.debug("Called: {s}", .{flag_strings[2]});
-                active_flags.*.flags = 1;
-            }
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[3])) {
-                std.log.debug("Called: {s}", .{flag_strings[3]});
-                active_flags.*.flags = 1;
-            }
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[4])) {
-                std.log.debug("Called: {s}", .{flag_strings[4]});
-                active_flags.*.version = 1;
-            }
-            else {
-                return error.UnknownFlag;
-            }
+        // argument 0 is always the exec path, so ignore it and start from index 1..
+        const first_argument: [*:0]const u8 = std.os.argv[1];
+
+        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), flag_list.version)) {
+            active_flags.*.version = 1;
+            std.log.debug("(parseCommandFlags) {s} hit!", .{flag_list.version});
+            return;
+        }
+        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), flag_list.help_short)) {
+            active_flags.*.help = 1;
+            std.log.debug("(parseCommandFlags) {s} hit!", .{flag_list.help_short});
+            return;
+        }
+        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), flag_list.help)) {
+            active_flags.*.help = 1;
+            std.log.debug("(parseCommandFlags) {s} hit!", .{flag_list.help});
+            return;
+        }
+        else {
+            active_flags.*.open = 1;
+            std.log.debug("Open set on [{s}]", .{first_argument});
+            return;
         }
     }
 };
