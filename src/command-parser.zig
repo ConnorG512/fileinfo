@@ -29,6 +29,12 @@ pub const CommandParser = struct {
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "-h")) {
                 std.log.debug("Help Called!", .{});
             }
+            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "--flags")) {
+                std.log.debug("Flags Called!", .{});
+            }
+            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "-f")) {
+                std.log.debug("Flags Called!", .{});
+            }
         }
     }
 };
