@@ -20,7 +20,6 @@ pub fn main() !void {
     };
 
     var activated_flags: ActivatedFlags = .{};
-    std.log.debug("activated_flags_size: {d}", .{@sizeOf(ActivatedFlags)});
     CommandParser.parseCommandFlags(&activated_flags) catch {
         try StdOutWriter.writeMessage("Unknown flag! Please see --flags");
     };
