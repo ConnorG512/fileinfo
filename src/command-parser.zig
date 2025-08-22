@@ -28,7 +28,7 @@ pub const CommandParser = struct {
     }
 
     pub fn parseCommandFlags(active_flags: *ActivatedFlags) void {
-        const flag_strings = [_][]const u8 {
+        const flag_strings = comptime [_][]const u8 {
             "--help",     // 0 
             "-h",         // 1
             "--flags",    // 2
