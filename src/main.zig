@@ -1,4 +1,5 @@
 const CommandParser = @import("command-parser.zig").CommandParser;
+const ActivatedFlags = @import("command-parser.zig").ActivatedFlags;
 
 pub fn main() !void {
 
@@ -13,5 +14,6 @@ pub fn main() !void {
         }
     };
 
-    CommandParser.parseCommandFlags();
+    var activated_flags: ActivatedFlags = .{};
+    CommandParser.parseCommandFlags(&activated_flags);
 }

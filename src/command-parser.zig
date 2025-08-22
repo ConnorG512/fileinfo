@@ -5,6 +5,12 @@ const ParserError = error {
     TooLittleArgumentsProvided,
 };
 
+pub const ActivatedFlags = struct {
+    help: u1 = 0,
+    flags: u1 = 0,
+    version: u1 = 0,
+};
+
 pub const CommandParser = struct {
     pub fn calculateArgumentNum() ParserError!void {
         const argument_count: u8 = @intCast(std.os.argv.len);
@@ -21,19 +27,27 @@ pub const CommandParser = struct {
         }
     }
 
-    pub fn parseCommandFlags() void {
+    pub fn parseCommandFlags(active_flags: *ActivatedFlags) void {
         for (std.os.argv) |flag| {
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "--help")) {
                 std.log.debug("Help Called!", .{});
+                active_flags.*.help = 1;
             }
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "-h")) {
                 std.log.debug("Help Called!", .{});
+                active_flags.*.help = 1;
             }
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "--flags")) {
                 std.log.debug("Flags Called!", .{});
+                active_flags.*.flags = 1;
             }
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "-f")) {
                 std.log.debug("Flags Called!", .{});
+                active_flags.*.flags = 1;
+            }
+            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "--version")) {
+                std.log.debug("Version Called!", .{});
+                active_flags.*.version = 1;
             }
         }
     }
