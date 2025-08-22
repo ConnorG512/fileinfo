@@ -11,11 +11,16 @@ pub fn main() !void {
             },
             error.TooLittleArgumentsProvided => {
                 return err;
+            },
+            error.UnknownFlag => {
+                return err;
             }
         }
     };
 
     var activated_flags: ActivatedFlags = .{};
     std.log.debug("activated_flags_size: {d}", .{@sizeOf(ActivatedFlags)});
-    CommandParser.parseCommandFlags(&activated_flags);
+    CommandParser.parseCommandFlags(&activated_flags) catch |err| {
+        return err;
+    };
 }

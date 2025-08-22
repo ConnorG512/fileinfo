@@ -3,6 +3,7 @@ const std = @import("std");
 const ParserError = error {
     ReachedMaxArgCount,
     TooLittleArgumentsProvided,
+    UnknownFlag,
 };
 
 pub const ActivatedFlags = packed struct {
@@ -27,7 +28,7 @@ pub const CommandParser = struct {
         }
     }
 
-    pub fn parseCommandFlags(active_flags: *ActivatedFlags) void {
+    pub fn parseCommandFlags(active_flags: *ActivatedFlags) !void {
         const flag_strings = comptime [_][]const u8 {
             "--help",     // 0 
             "-h",         // 1
@@ -56,6 +57,9 @@ pub const CommandParser = struct {
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[4])) {
                 std.log.debug("Called: {s}", .{flag_strings[4]});
                 active_flags.*.version = 1;
+            }
+            else {
+                return error.UnknownFlag;
             }
         }
     }
