@@ -5,7 +5,7 @@ const ParserError = error {
     TooLittleArgumentsProvided,
 };
 
-pub const ActivatedFlags = struct {
+pub const ActivatedFlags = packed struct {
     help: u1 = 0,
     flags: u1 = 0,
     version: u1 = 0,

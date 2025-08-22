@@ -1,3 +1,4 @@
+const std = @import("std");
 const CommandParser = @import("command-parser.zig").CommandParser;
 const ActivatedFlags = @import("command-parser.zig").ActivatedFlags;
 
@@ -15,5 +16,6 @@ pub fn main() !void {
     };
 
     var activated_flags: ActivatedFlags = .{};
+    std.log.debug("activated_flags_size: {d}", .{@sizeOf(ActivatedFlags)});
     CommandParser.parseCommandFlags(&activated_flags);
 }
