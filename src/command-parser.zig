@@ -38,23 +38,23 @@ pub const CommandParser = struct {
 
         for (std.os.argv) |flag| {
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[0])) {
-                std.log.debug("Help Called!", .{});
+                std.log.debug("--help", .{});
                 active_flags.*.help = 1;
             }
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[1])) {
-                std.log.debug("Help Called!", .{});
+                std.log.debug("-h", .{});
                 active_flags.*.help = 1;
             }
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[2])) {
-                std.log.debug("Flags Called!", .{});
+                std.log.debug("--flags", .{});
                 active_flags.*.flags = 1;
             }
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[3])) {
-                std.log.debug("Flags Called!", .{});
+                std.log.debug("-f", .{});
                 active_flags.*.flags = 1;
             }
             if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[4])) {
-                std.log.debug("Version Called!", .{});
+                std.log.debug("--version", .{});
                 active_flags.*.version = 1;
             }
         }
