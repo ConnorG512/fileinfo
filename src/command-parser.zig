@@ -28,24 +28,32 @@ pub const CommandParser = struct {
     }
 
     pub fn parseCommandFlags(active_flags: *ActivatedFlags) void {
+        const flag_strings = [_][]const u8 {
+            "--help",     // 0 
+            "-h",         // 1
+            "--flags",    // 2
+            "-f",         // 3
+            "--version",  // 4
+        };
+
         for (std.os.argv) |flag| {
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "--help")) {
+            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[0])) {
                 std.log.debug("Help Called!", .{});
                 active_flags.*.help = 1;
             }
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "-h")) {
+            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[1])) {
                 std.log.debug("Help Called!", .{});
                 active_flags.*.help = 1;
             }
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "--flags")) {
+            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[2])) {
                 std.log.debug("Flags Called!", .{});
                 active_flags.*.flags = 1;
             }
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "-f")) {
+            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[3])) {
                 std.log.debug("Flags Called!", .{});
                 active_flags.*.flags = 1;
             }
-            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), "--version")) {
+            if (std.mem.eql(u8, std.mem.sliceTo(flag, 0), flag_strings[4])) {
                 std.log.debug("Version Called!", .{});
                 active_flags.*.version = 1;
             }
