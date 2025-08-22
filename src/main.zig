@@ -4,6 +4,7 @@ const CommandParser = @import("command-parser.zig").CommandParser;
 const ActivatedFlags = @import("command-parser.zig").ActivatedFlags;
 const FlagList = @import("command-parser.zig").AvailableFlags;
 const StdOutWriter = @import("stdout-writer.zig").StdOutWriter;
+const FileOpen = @import("file-open.zig").FileOpen;
 
 pub fn main() !void {
 
@@ -32,5 +33,11 @@ pub fn main() !void {
         try StdOutWriter.writeMessage(flag_list.help);
         try StdOutWriter.writeMessage(flag_list.help_short);
         try StdOutWriter.writeMessage(flag_list.version);
+    }
+    if (activated_flags.open == 1) {
+        var file_stat: std.os.linux.Stat = undefined;
+        try FileOpen.openFile(&file_stat);
+
+        std.log.debug("File size: {d}", .{file_stat.size});
     }
 }
