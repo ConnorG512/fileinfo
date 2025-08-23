@@ -10,10 +10,13 @@ pub const FileStats = struct {
 
     pub fn startFileSize() !void {
         var file_size_struct: FileSizes = .{};
+
         try getFileStats(&file_size_struct);
         FileMath.calculateFileSize(&file_size_struct);
         try printFileSizeStats(&file_size_struct);
     } 
+    pub fn StartFileSignature() void {
+    }
     fn getFileStats(file_sizes: *FileSizes) !void {
         const file_path: [*:0]const u8 = std.os.argv[1];
         var file_stat: std.os.linux.Stat = undefined;
