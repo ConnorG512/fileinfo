@@ -44,6 +44,9 @@ pub const FileReader = struct {
             std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.mpeg4_iso.name});
             return FileSignatures.FileSignatureList.MPEG4ISO;
         }
+
+
+        std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.unknown_format.name});
         return FileSignatures.FileSignatureList.Unknown;
     }
 };
