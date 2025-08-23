@@ -1,12 +1,14 @@
 pub const FileSignature = struct {
-    signature: []u8 = undefined,
-    name: []u8 = "Unknown",
+    signature: []const u8 = undefined,
+    name: []const u8 = "Unknown",
 };
 
-const FileSignatureList = enum {
+pub const FileSignatureList = enum {
+    Unknown,
     PNG,
     JPEG2000,
     MPEG4ISO,
+    Elf,
 };
 
 fn createFileSignature(comptime signature: []const u8, comptime name: []const u8) FileSignature {

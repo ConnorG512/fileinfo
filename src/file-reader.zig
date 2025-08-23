@@ -6,7 +6,10 @@ pub const FileReader = struct {
     pub fn scanForFileSignature() !void {
         var file_buffer: [32]u8 = undefined; 
         const file_descriptor = openFile();
+        
         try readFileSignatureBytes(&file_descriptor, &file_buffer);
+
+        _ = determineFileSignature(&file_buffer);
     }
     fn openFile() usize {
         const file_descriptor: usize = std.os.linux.open(std.os.argv[1], .{ .ACCMODE = .RDONLY }, 0);
@@ -17,7 +20,12 @@ pub const FileReader = struct {
         std.log.debug("{X}", .{read_buffer[0..]});
         std.log.debug("Num bytes read: {d}.", .{num_bytes_read});
     }
-    fn determineFileSignature() void {
+    fn determineFileSignature(file_buffer: []const u8) FileSignatures.FileSignatureList {
+        if (std.mem.eql(u8, file_buffer[0..FileSignatures.elf.signature.len], FileSignatures.elf.signature)) {
 
+            std.log.debug("(determineFileSignature) Elf hit!", .{});
+            return FileSignatures.FileSignatureList.Elf;
+        }
+        return FileSignatures.FileSignatureList.Unknown;
     }
 };
