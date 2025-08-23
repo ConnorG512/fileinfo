@@ -35,16 +35,6 @@ pub fn main() !void {
         try std.io.getStdOut().writer().print("\t{s}\n", .{flag_list.version});
     }
     if (activated_flags.open == 1) {
-        var file_stat: std.os.linux.Stat = undefined;
-
-        try FileStats.openFile(&file_stat);
-
-        var file_size: FileMath = .{ .bytes = @intCast(file_stat.size) };
-        file_size.calculateFileSize();
-
-        try std.io.getStdOut().writer().print("File Properties:\n", .{});
-        try std.io.getStdOut().writer().print("Size (Bytes): {d}\n", .{file_size.bytes});
-        try std.io.getStdOut().writer().print("Size (KiB): {d}\n", .{file_size.kib});
-        try std.io.getStdOut().writer().print("Size (MiB): {d}\n", .{file_size.mib});
+        try FileStats.startFileSize();
     }
 }
