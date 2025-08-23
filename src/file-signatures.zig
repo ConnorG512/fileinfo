@@ -22,7 +22,7 @@ fn createFileSignature(comptime signature: []const u8, comptime name: []const u8
 
 // Base:
 pub const unknown_format: FileSignature = createFileSignature(
-    &[_]u8{ 0xAA, 0xAA, 0xAA, 0xAA, 0xAA }, 
+    &[_]u8{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }, 
     "Unknown");
 
 // Image format:
