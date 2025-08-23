@@ -11,20 +11,38 @@ pub const FileReader = struct {
 
         _ = determineFileSignature(&file_buffer);
     }
+
     fn openFile() usize {
         const file_descriptor: usize = std.os.linux.open(std.os.argv[1], .{ .ACCMODE = .RDONLY }, 0);
         return file_descriptor;
     }
+
     fn readFileSignatureBytes(file_descriptor: *const usize, read_buffer: []u8) !void {
         const num_bytes_read = std.os.linux.read(@intCast(file_descriptor.*), read_buffer.ptr, read_buffer.len);
         std.log.debug("{X}", .{read_buffer[0..]});
         std.log.debug("Num bytes read: {d}.", .{num_bytes_read});
     }
+
     fn determineFileSignature(file_buffer: []const u8) FileSignatures.FileSignatureList {
         if (std.mem.eql(u8, file_buffer[0..FileSignatures.elf.signature.len], FileSignatures.elf.signature)) {
 
-            std.log.debug("(determineFileSignature) Elf hit!", .{});
+            std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.elf.name});
             return FileSignatures.FileSignatureList.Elf;
+        }
+        if (std.mem.eql(u8, file_buffer[0..FileSignatures.png_file.signature.len], FileSignatures.png_file.signature)) {
+
+            std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.png_file.name});
+            return FileSignatures.FileSignatureList.PNG;
+        }
+        if (std.mem.eql(u8, file_buffer[0..FileSignatures.jpeg_2000.signature.len], FileSignatures.jpeg_2000.signature)) {
+
+            std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.jpeg_2000.name});
+            return FileSignatures.FileSignatureList.JPEG2000;
+        }
+        if (std.mem.eql(u8, file_buffer[0..FileSignatures.mpeg4_iso.signature.len], FileSignatures.mpeg4_iso.signature)) {
+
+            std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.mpeg4_iso.name});
+            return FileSignatures.FileSignatureList.MPEG4ISO;
         }
         return FileSignatures.FileSignatureList.Unknown;
     }
