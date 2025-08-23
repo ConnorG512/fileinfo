@@ -6,6 +6,8 @@ const FileError = error {
     FailedToStat,
 };
 
+const file_path_index = 1;
+
 pub const FileStats = struct {
 
     pub fn startFileSize() !void {
@@ -15,10 +17,8 @@ pub const FileStats = struct {
         FileMath.calculateFileSize(&file_size_struct);
         try printFileSizeStats(&file_size_struct);
     } 
-    pub fn StartFileSignature() void {
-    }
     fn getFileStats(file_sizes: *FileSizes) !void {
-        const file_path: [*:0]const u8 = std.os.argv[1];
+        const file_path: [*:0]const u8 = std.os.argv[file_path_index];
         var file_stat: std.os.linux.Stat = undefined;
 
         const result: usize = std.os.linux.stat(file_path, &file_stat);
