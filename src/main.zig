@@ -5,7 +5,7 @@ const ActivatedFlags = @import("command-parser.zig").ActivatedFlags;
 const FlagList = @import("command-parser.zig").AvailableFlags;
 const FileStats = @import("file-stats.zig").FileStats;
 const FileMath = @import("file-size-math.zig").FileMath;
-const FileOpener = @import("file-reader.zig").FileOpener;
+const FileReader = @import("file-reader.zig").FileReader;
 
 pub fn main() !void {
 
@@ -36,7 +36,7 @@ pub fn main() !void {
         try std.io.getStdOut().writer().print("\t{s}\n", .{flag_list.version});
     }
     if (activated_flags.open == 1) {
-        try FileOpener.scanForFileSignature();
+        try FileReader.scanForFileSignature();
         try FileStats.startFileSize();
     }
 }

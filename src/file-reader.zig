@@ -1,7 +1,7 @@
 const std = @import("std");
 const FileSignatures = @import("file-signatures.zig");
 
-pub const FileOpener = struct {
+pub const FileReader = struct {
 
     pub fn scanForFileSignature() !void {
         var file_buffer: [32]u8 = undefined; 
