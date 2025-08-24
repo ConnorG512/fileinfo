@@ -15,7 +15,7 @@ pub const FileSignatureList = enum {
 fn createFileSignature(
     comptime signature: []const u8, 
     comptime name: []const u8, 
-    file_type: FileSignatureList) FileSignature {
+    comptime file_type: FileSignatureList) FileSignature {
 
    const created_signature: FileSignature = .{
        .signature = signature,
