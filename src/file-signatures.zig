@@ -1,6 +1,7 @@
 pub const FileSignature = struct {
     signature: []const u8 = undefined,
     name: []const u8 = "Unknown",
+    file_type: FileSignatureList = FileSignatureList.Unknown,
 };
 
 pub const FileSignatureList = enum {
@@ -11,35 +12,52 @@ pub const FileSignatureList = enum {
     Elf,
 };
 
-fn createFileSignature(comptime signature: []const u8, comptime name: []const u8) FileSignature {
+fn createFileSignature(
+    comptime signature: []const u8, 
+    comptime name: []const u8, 
+    file_type: FileSignatureList) FileSignature {
+
    const created_signature: FileSignature = .{
        .signature = signature,
        .name = name,
+       .file_type = file_type,
    };
 
    return created_signature;
 }
 
+pub const file_signatures_array = [_]FileSignature { 
+    png_file, 
+    jpeg_2000, 
+    mpeg4_iso, 
+    elf, 
+};
+
 // Base:
 pub const unknown_format: FileSignature = createFileSignature(
     &[_]u8{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }, 
-    "Unknown");
+    "Unknown",
+    .Unknown);
 
 // Image format:
-pub const png_file: FileSignature = createFileSignature(
+const png_file: FileSignature = createFileSignature(
     &[_]u8{ 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }, 
-    "PNG (Portable Network Graphics)");
+    "PNG (Portable Network Graphics)",
+    .PNG);
 
-pub const jpeg_2000: FileSignature = createFileSignature(
+const jpeg_2000: FileSignature = createFileSignature(
     &[_]u8{ 0x00, 0x00, 0x00, 0x0C, 0x6A, 0x50, 0x20, 0x20, 0x0D, 0x0A, 0x87, 0x0A }, 
-    "JPEG 2000");
+    "JPEG 2000",
+    .JPEG2000);
 
 // Video format:
-pub const mpeg4_iso: FileSignature = createFileSignature(
+const mpeg4_iso: FileSignature = createFileSignature(
     &[_]u8{ 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D }, 
-    "ISO Base Media File (MPEG-4)");
+    "ISO Base Media File (MPEG-4)",
+    .MPEG4ISO);
 
 // Executables:
-pub const elf: FileSignature = createFileSignature(
+const elf: FileSignature = createFileSignature(
     &[_]u8{ 0x7F, 0x45, 0x4C, 0x46 }, 
-    "ELF Executable");
+    "ELF Executable",
+    .Elf);

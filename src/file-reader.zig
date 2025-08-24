@@ -24,29 +24,14 @@ pub const FileReader = struct {
     }
 
     fn determineFileSignature(file_buffer: []const u8) FileSignatures.FileSignatureList {
-        if (std.mem.eql(u8, file_buffer[0..FileSignatures.elf.signature.len], FileSignatures.elf.signature)) {
 
-            std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.elf.name});
-            return FileSignatures.FileSignatureList.Elf;
-        }
-        if (std.mem.eql(u8, file_buffer[0..FileSignatures.png_file.signature.len], FileSignatures.png_file.signature)) {
-
-            std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.png_file.name});
-            return FileSignatures.FileSignatureList.PNG;
-        }
-        if (std.mem.eql(u8, file_buffer[0..FileSignatures.jpeg_2000.signature.len], FileSignatures.jpeg_2000.signature)) {
-
-            std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.jpeg_2000.name});
-            return FileSignatures.FileSignatureList.JPEG2000;
-        }
-        if (std.mem.eql(u8, file_buffer[0..FileSignatures.mpeg4_iso.signature.len], FileSignatures.mpeg4_iso.signature)) {
-
-            std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.mpeg4_iso.name});
-            return FileSignatures.FileSignatureList.MPEG4ISO;
+        for (FileSignatures.file_signatures_array) |current_signature| {
+            if (std.mem.eql(u8, file_buffer[0..current_signature.signature.len], current_signature.signature)) {
+                std.log.debug("(determineFileSignature) {s} hit!", .{current_signature.name});
+                return current_signature.file_type;
+            }
         }
 
-
-        std.log.debug("(determineFileSignature) {s} hit!", .{FileSignatures.unknown_format.name});
         return FileSignatures.FileSignatureList.Unknown;
     }
 };
