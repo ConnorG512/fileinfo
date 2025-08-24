@@ -9,7 +9,9 @@ pub const FileReader = struct {
         
         try readFileSignatureBytes(&file_descriptor, &file_buffer);
 
-        _ = determineFileSignature(&file_buffer);
+        const found_file_type = determineFileSignature(&file_buffer);
+
+        try printFileType(found_file_type);
     }
 
     fn openFile() usize {
@@ -33,5 +35,13 @@ pub const FileReader = struct {
         }
 
         return FileSignatures.FileSignatureList.Unknown;
+    }
+
+    fn printFileType(file_type_found: FileSignatures.FileSignatureList) !void {
+        for (FileSignatures.file_signatures_array) |current_signature| {
+            if (file_type_found == current_signature.file_type) {
+                try std.io.getStdOut().writer().print("File Type: {s}\n", .{current_signature.name});
+            }
+        }
     }
 };
