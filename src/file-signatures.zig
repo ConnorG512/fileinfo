@@ -28,6 +28,8 @@ pub const FileSignatureList = enum {
     Vpk,
     Wmf,
     Blend,
+    Flv,
+    TrueType,
 };
 
 fn createFileSignature(
@@ -158,6 +160,16 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x42, 0x4C, 0x45, 0x4E, 0x44, 0x45, 0x52 }, 
         "Blender file (blend)", 
         .Blend),
+    
+    createFileSignature(
+        &[_]u8{ 0x46, 0x4C, 0x56 }, 
+        "Flash Video file (flv)", 
+        .Flv),
+    
+    createFileSignature(
+        &[_]u8{ 0x00, 0x01, 0x00, 0x00, 0x00 }, 
+        "TrueType Font (ttf/tte/dfont)", 
+        .TrueType),
 };
 
 // Base:
