@@ -27,6 +27,7 @@ pub const FileSignatureList = enum {
     Deb,
     Vpk,
     Wmf,
+    Blend,
 };
 
 fn createFileSignature(
@@ -152,6 +153,11 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0xD7, 0xCD, 0xC6, 0x9A }, 
         "Windows metafile (wmf)", 
         .Wmf),
+    
+    createFileSignature(
+        &[_]u8{ 0x42, 0x4C, 0x45, 0x4E, 0x44, 0x45, 0x52 }, 
+        "Blender file (blend)", 
+        .Blend),
 };
 
 // Base:
