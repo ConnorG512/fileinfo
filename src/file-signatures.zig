@@ -26,6 +26,7 @@ pub const FileSignatureList = enum {
     Lua,
     Deb,
     Vpk,
+    Wmf,
 };
 
 fn createFileSignature(
@@ -144,8 +145,13 @@ pub const file_signatures_array = [_]FileSignature {
     
     createFileSignature(
         &[_]u8{ 0x34, 0x12, 0xAA, 0x55 }, 
-        "Source Engine vpk file (vpk)", 
+        "Source Engine data file (vpk)", 
         .Vpk),
+    
+    createFileSignature(
+        &[_]u8{ 0xD7, 0xCD, 0xC6, 0x9A }, 
+        "Windows metafile (wmf)", 
+        .Wmf),
 };
 
 // Base:
