@@ -84,7 +84,7 @@ const jpeg: FileSignature = createFileSignature(
 const jpeg_xl: FileSignature = createFileSignature(
     &[_]u8{ 0x00, 0x00, 0x00, 0x0C, 0x4A, 0x58, 0x4C, 0x20, 0x0D, 0x0A, 0x87, 0x0A }, 
     "JPEG XL image file. (jxl)", 
-    .Jpeg);
+    .JpegXl);
 
 const mpeg4_iso: FileSignature = createFileSignature(
     &[_]u8{ 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D }, 
@@ -94,7 +94,7 @@ const mpeg4_iso: FileSignature = createFileSignature(
 const ogg: FileSignature = createFileSignature(
     &[_]u8{ 0x4F ,0x67 ,0x67 ,0x53 }, 
     "OGG container format (ogg/oga/ogv)", 
-    .Jpeg);
+    .Ogg);
 
 const flac: FileSignature = createFileSignature(
     &[_]u8{ 0x66, 0x4C, 0x61, 0x43 }, 
