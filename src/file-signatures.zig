@@ -15,6 +15,7 @@ pub const FileSignatureList = enum {
     Jpeg,
     JpegXl,
     Ogg,
+    Pdf,
 };
 
 fn createFileSignature(
@@ -41,6 +42,7 @@ pub const file_signatures_array = [_]FileSignature {
     jpeg,
     jpeg_xl,
     ogg,
+    pdf,
 };
 
 // Base:
@@ -89,6 +91,13 @@ const ogg: FileSignature = createFileSignature(
     &[_]u8{ 0x4F ,0x67 ,0x67 ,0x53 }, 
     "OGG container format (ogg/oga/ogv)", 
     .Jpeg);
+
+// Document:
+
+const pdf: FileSignature = createFileSignature(
+    &[_]u8{ 0x25, 0x50, 0x44, 0x46, 0x2D }, 
+    "PDF Document (pdf)", 
+    .Pdf);
 
 // Executables:
 const elf: FileSignature = createFileSignature(
