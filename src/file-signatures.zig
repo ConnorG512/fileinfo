@@ -13,6 +13,8 @@ pub const FileSignatureList = enum {
     Ico,
     Icns,
     Jpeg,
+    JpegXl,
+    Ogg,
 };
 
 fn createFileSignature(
@@ -37,6 +39,8 @@ pub const file_signatures_array = [_]FileSignature {
     ico,
     icns,
     jpeg,
+    jpeg_xl,
+    ogg,
 };
 
 // Base:
@@ -45,7 +49,7 @@ pub const unknown_format: FileSignature = createFileSignature(
     "Unknown",
     .Unknown);
 
-// Image format:
+// Media format:
 const png_file: FileSignature = createFileSignature(
     &[_]u8{ 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }, 
     "PNG (Portable Network Graphics)",
@@ -55,18 +59,6 @@ const jpeg_2000: FileSignature = createFileSignature(
     &[_]u8{ 0x00, 0x00, 0x00, 0x0C, 0x6A, 0x50, 0x20, 0x20, 0x0D, 0x0A, 0x87, 0x0A }, 
     "JPEG 2000",
     .JPEG2000);
-
-// Video format:
-const mpeg4_iso: FileSignature = createFileSignature(
-    &[_]u8{ 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D }, 
-    "ISO Base Media File (MPEG-4)",
-    .MPEG4ISO);
-
-// Executables:
-const elf: FileSignature = createFileSignature(
-    &[_]u8{ 0x7F, 0x45, 0x4C, 0x46 }, 
-    "ELF Executable",
-    .Elf);
 
 const ico: FileSignature = createFileSignature(
     &[_]u8{ 0x00, 0x00, 0x01, 0x00 }, 
@@ -87,3 +79,21 @@ const jpeg_xl: FileSignature = createFileSignature(
     &[_]u8{ 0x00, 0x00, 0x00, 0x0C, 0x4A, 0x58, 0x4C, 0x20, 0x0D, 0x0A, 0x87, 0x0A }, 
     "JPEG XL image file. (jxl)", 
     .Jpeg);
+
+const mpeg4_iso: FileSignature = createFileSignature(
+    &[_]u8{ 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6F, 0x6D }, 
+    "ISO Base Media File (MPEG-4)",
+    .MPEG4ISO);
+
+const ogg: FileSignature = createFileSignature(
+    &[_]u8{ 0x4F ,0x67 ,0x67 ,0x53 }, 
+    "OGG container format (ogg/oga/ogv)", 
+    .Jpeg);
+
+// Executables:
+const elf: FileSignature = createFileSignature(
+    &[_]u8{ 0x7F, 0x45, 0x4C, 0x46 }, 
+    "ELF Executable",
+    .Elf);
+
+
