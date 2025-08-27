@@ -25,6 +25,7 @@ pub const FileSignatureList = enum {
     RichText,
     Lua,
     Deb,
+    Vpk,
 };
 
 fn createFileSignature(
@@ -140,6 +141,11 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x21, 0x3C, 0x61, 0x72, 0x63, 0x68, 0x3E, 0x0A }, 
         "Linux Deb file (deb)", 
         .Deb),
+    
+    createFileSignature(
+        &[_]u8{ 0x34, 0x12, 0xAA, 0x55 }, 
+        "Source Engine vpk file (vpk)", 
+        .Vpk),
 };
 
 // Base:
