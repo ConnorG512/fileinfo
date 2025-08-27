@@ -19,6 +19,7 @@ pub const FileSignatureList = enum {
     Flac,
     Tar,
     Oar,
+    Mlvi,
 };
 
 fn createFileSignature(
@@ -104,6 +105,11 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x4F, 0x41, 0x52 }, 
         "OAR file.",
         .Oar), 
+
+    createFileSignature(
+        &[_]u8{ 0x4D, 0x4C, 0x56, 0x49 }, 
+        "Magic Lantern Video (MLVI)", 
+        .Mlvi)
 };
 
 // Base:
