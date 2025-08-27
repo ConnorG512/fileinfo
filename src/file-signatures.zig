@@ -31,6 +31,7 @@ pub const FileSignatureList = enum {
     Flv,
     TrueType,
     Grib,
+    WinReg,
 };
 
 fn createFileSignature(
@@ -176,6 +177,11 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x47, 0x52, 0x49, 0x42 }, 
         "Gridded data (grib/grib2)", 
         .Grib),
+    
+    createFileSignature(
+        &[_]u8{ 0x72, 0x65, 0x67, 0x66 }, 
+        "Windows Registry (dat/hiv)", 
+        .WinReg),
 };
 
 // Base:
