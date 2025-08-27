@@ -13,7 +13,7 @@
   {
     devShells.${system}.default = pkgs.mkShell {
       buildInputs = with pkgs; [
-        zig
+        zig_0_15
         lldb
       ];
     };
