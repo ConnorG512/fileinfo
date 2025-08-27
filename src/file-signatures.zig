@@ -30,6 +30,7 @@ pub const FileSignatureList = enum {
     Blend,
     Flv,
     TrueType,
+    Grib,
 };
 
 fn createFileSignature(
@@ -170,6 +171,11 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x00, 0x01, 0x00, 0x00, 0x00 }, 
         "TrueType Font (ttf/tte/dfont)", 
         .TrueType),
+    
+    createFileSignature(
+        &[_]u8{ 0x47, 0x52, 0x49, 0x42 }, 
+        "Gridded data (grib/grib2)", 
+        .Grib),
 };
 
 // Base:
