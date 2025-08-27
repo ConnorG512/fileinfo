@@ -20,6 +20,7 @@ pub const FileSignatureList = enum {
     Tar,
     Oar,
     Mlvi,
+    SevenZip,
 };
 
 fn createFileSignature(
@@ -109,7 +110,13 @@ pub const file_signatures_array = [_]FileSignature {
     createFileSignature(
         &[_]u8{ 0x4D, 0x4C, 0x56, 0x49 }, 
         "Magic Lantern Video (MLVI)", 
-        .Mlvi)
+        .Mlvi),
+    
+    createFileSignature(
+        &[_]u8{ 0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C }, 
+        "7-Zip Archive File (7z)", 
+        .SevenZip),
+
 };
 
 // Base:
