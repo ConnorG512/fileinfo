@@ -25,13 +25,11 @@ fn createFileSignature(
     comptime name: []const u8, 
     comptime file_type: FileSignatureList) FileSignature {
 
-   const created_signature: FileSignature = .{
+   return .{
        .signature = signature,
        .name = name,
        .file_type = file_type,
    };
-
-   return created_signature;
 }
 
 pub const file_signatures_array = [_]FileSignature {
@@ -52,7 +50,7 @@ pub const file_signatures_array = [_]FileSignature {
         .Ico),
 
     createFileSignature(
-        &[_]u8{ 0x69, 0x63, 0x6e, 0x73}, 
+        &[_]u8{ 0x69, 0x63, 0x6e, 0x73 }, 
         "Apple Icon (icns)", 
         .Icns), 
 
