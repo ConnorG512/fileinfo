@@ -16,6 +16,7 @@ pub const FileSignatureList = enum {
     JpegXl,
     Ogg,
     Pdf,
+    Flac,
 };
 
 fn createFileSignature(
@@ -43,6 +44,7 @@ pub const file_signatures_array = [_]FileSignature {
     jpeg_xl,
     ogg,
     pdf,
+    flac,
 };
 
 // Base:
@@ -91,6 +93,11 @@ const ogg: FileSignature = createFileSignature(
     &[_]u8{ 0x4F ,0x67 ,0x67 ,0x53 }, 
     "OGG container format (ogg/oga/ogv)", 
     .Jpeg);
+
+const flac: FileSignature = createFileSignature(
+    &[_]u8{ 0x66, 0x4C, 0x61, 0x43 }, 
+    "FLAC Audio (flac)",
+    .Flac);
 
 // Document:
 
