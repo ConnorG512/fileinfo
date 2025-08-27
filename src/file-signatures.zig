@@ -21,6 +21,9 @@ pub const FileSignatureList = enum {
     Oar,
     Mlvi,
     SevenZip,
+    MicroTape,
+    RichText,
+    Lua,
 };
 
 fn createFileSignature(
@@ -116,7 +119,21 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x37, 0x7A, 0xBC, 0xAF, 0x27, 0x1C }, 
         "7-Zip Archive File (7z)", 
         .SevenZip),
+    
+    createFileSignature(
+        &[_]u8{ 0x54, 0x41, 0x50, 0x45 }, 
+        "Microsoft Tape Format", 
+        .MicroTape),
 
+    createFileSignature(
+        &[_]u8{ 0x7B, 0x5C, 0x72, 0x74, 0x66, 0x31 }, 
+        "Rich Text format (rtf)", 
+        .RichText),
+    
+    createFileSignature(
+        &[_]u8{ 0x1B, 0x4C, 0x75, 0x61 }, 
+        "Lua Bytecode (lua)", 
+        .Lua),
 };
 
 // Base:
