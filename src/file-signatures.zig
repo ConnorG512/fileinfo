@@ -24,6 +24,7 @@ pub const FileSignatureList = enum {
     MicroTape,
     RichText,
     Lua,
+    Deb,
 };
 
 fn createFileSignature(
@@ -134,6 +135,11 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x1B, 0x4C, 0x75, 0x61 }, 
         "Lua Bytecode (lua)", 
         .Lua),
+    
+    createFileSignature(
+        &[_]u8{ 0x21, 0x3C, 0x61, 0x72, 0x63, 0x68, 0x3E, 0x0A }, 
+        "Linux Deb file (deb)", 
+        .Deb),
 };
 
 // Base:
