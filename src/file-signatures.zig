@@ -82,3 +82,8 @@ const jpeg: FileSignature = createFileSignature(
     &[_]u8{ 0xFF, 0xD8, 0xFF }, 
     "JPEG image file. (jpg/jpeg)", 
     .Jpeg);
+
+const jpeg_xl: FileSignature = createFileSignature(
+    &[_]u8{ 0x00, 0x00, 0x00, 0x0C, 0x4A, 0x58, 0x4C, 0x20, 0x0D, 0x0A, 0x87, 0x0A }, 
+    "JPEG XL image file. (jxl)", 
+    .Jpeg);
