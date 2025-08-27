@@ -47,6 +47,7 @@ pub const file_signatures_array = [_]FileSignature {
     pdf,
     flac,
     tar0,
+    tar1,
 };
 
 // Base:
