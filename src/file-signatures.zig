@@ -10,6 +10,9 @@ pub const FileSignatureList = enum {
     JPEG2000,
     MPEG4ISO,
     Elf,
+    Ico,
+    Icns,
+    Jpeg,
 };
 
 fn createFileSignature(
@@ -31,6 +34,9 @@ pub const file_signatures_array = [_]FileSignature {
     jpeg_2000, 
     mpeg4_iso, 
     elf, 
+    ico,
+    icns,
+    jpeg,
 };
 
 // Base:
@@ -61,3 +67,18 @@ const elf: FileSignature = createFileSignature(
     &[_]u8{ 0x7F, 0x45, 0x4C, 0x46 }, 
     "ELF Executable",
     .Elf);
+
+const ico: FileSignature = createFileSignature(
+    &[_]u8{ 0x00, 0x00, 0x01, 0x00 }, 
+    "Icon file (ico)", 
+    .Ico);
+
+const icns: FileSignature = createFileSignature(
+    &[_]u8{ 0x69, 0x63, 0x6e, 0x73}, 
+    "Apple Icon (icns)", 
+    .Icns); 
+
+const jpeg: FileSignature = createFileSignature(
+    &[_]u8{ 0xFF, 0xD8, 0xFF }, 
+    "JPEG image file. (jpg/jpeg)", 
+    .Jpeg);
