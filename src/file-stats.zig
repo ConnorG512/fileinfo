@@ -29,9 +29,14 @@ pub const FileStats = struct {
         file_sizes.*.bytes = @floatFromInt(file_stat.size);
     }
     fn printFileSizeStats(file_sizes: *FileSizes) !void {
-        try std.io.getStdOut().writer().print("File Size:\n", .{});
-        try std.io.getStdOut().writer().print("\t{d}(Bytes)\n", .{file_sizes.*.bytes});
-        try std.io.getStdOut().writer().print("\t{d:.2}(KiB)\n", .{file_sizes.*.kib});
-        try std.io.getStdOut().writer().print("\t{d:.2}(MiB)\n", .{file_sizes.*.mib});
+        var stdout_buffer: [512]u8 = undefined;
+        var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+        const stdout = &stdout_writer.interface;
+        
+        try stdout.print("File Size\n", .{});
+        try stdout.print("\t{d}(Bytes)\n", .{file_sizes.*.bytes});
+        try stdout.print("\t{d:.2}(KiB)\n", .{file_sizes.*.kib});
+        try stdout.print("\t{d:.2}(MiB)\n", .{file_sizes.*.mib});
+        try stdout.flush();
     }
 };

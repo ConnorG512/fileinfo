@@ -40,7 +40,12 @@ pub const FileReader = struct {
     fn printFileType(file_type_found: FileSignatures.FileSignatureList) !void {
         for (FileSignatures.file_signatures_array) |current_signature| {
             if (file_type_found == current_signature.file_type) {
-                try std.io.getStdOut().writer().print("File Type: {s}\n", .{current_signature.name});
+                var stdout_buffer: [64]u8 = undefined;
+                var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+                const stdout = &stdout_writer.interface;
+
+                try stdout.print("File Type: {s}\n", .{current_signature.name});
+                try stdout.flush();
             }
         }
     }

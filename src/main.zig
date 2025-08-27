@@ -9,15 +9,20 @@ const FileReader = @import("file-reader.zig").FileReader;
 
 pub fn main() !void {
 
+    var stdout_buffer: [1024]u8 = undefined;
+    var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+    const stdout = &stdout_writer.interface;
+
     CommandParser.calculateArgumentNum() catch |err| {
         switch (err) {
             error.ReachedMaxArgCount => {
-                try std.io.getStdOut().writer().print("Too many flags provided!", .{});
+                try stdout.print("Too many flags provided!\n", .{});
+                try stdout.flush();
                 return err;
             },
             error.TooLittleArgumentsProvided => {
-                try std.io.getStdOut().writer().print(
-                    "Not Enough flags provided! See \"--flags\" for options.", .{});
+                try stdout.print("Not Enough flags provided! See \"--flags\" for options.\n", .{});
+                try stdout.flush();
                 return err;
             },
             else => {},
@@ -31,9 +36,11 @@ pub fn main() !void {
     if (activated_flags.help == 1) {
         const flag_list: FlagList = .{};
 
-        try std.io.getStdOut().writer().print("Available commands:\n", .{});
-        try std.io.getStdOut().writer().print("\t{s} {s}\n", .{flag_list.help_short, flag_list.help});
-        try std.io.getStdOut().writer().print("\t{s}\n", .{flag_list.version});
+        try stdout.print("Available commands\n", .{});
+        try stdout.print("\t{s} {s}\n", .{flag_list.help_short, flag_list.help});
+        try stdout.print("\t{s}\n", .{flag_list.version});
+
+        try stdout.flush();
     }
     if (activated_flags.open == 1) {
         try FileReader.scanForFileSignature();
