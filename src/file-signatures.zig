@@ -17,6 +17,7 @@ pub const FileSignatureList = enum {
     Ogg,
     Pdf,
     Flac,
+    Tar,
 };
 
 fn createFileSignature(
@@ -45,6 +46,7 @@ pub const file_signatures_array = [_]FileSignature {
     ogg,
     pdf,
     flac,
+    tar0,
 };
 
 // Base:
@@ -105,6 +107,18 @@ const pdf: FileSignature = createFileSignature(
     &[_]u8{ 0x25, 0x50, 0x44, 0x46, 0x2D }, 
     "PDF Document (pdf)", 
     .Pdf);
+
+// Archive:
+
+const tar0: FileSignature = createFileSignature(
+    &[_]u8{ 0x75, 0x73, 0x74, 0x61, 0x72, 0x00, 0x30, 0x30 }, 
+    "Tar archive file (tar)", 
+    .Tar);
+
+const tar1: FileSignature = createFileSignature(
+    &[_]u8{ 0x75, 0x73, 0x74, 0x61, 0x72, 0x20, 0x20, 0x00 }, 
+    "Tar archive file (tar)", 
+    .Tar);
 
 // Executables:
 const elf: FileSignature = createFileSignature(
