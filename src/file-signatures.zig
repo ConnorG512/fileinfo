@@ -18,6 +18,7 @@ pub const FileSignatureList = enum {
     Pdf,
     Flac,
     Tar,
+    Oar,
 };
 
 fn createFileSignature(
@@ -99,6 +100,10 @@ pub const file_signatures_array = [_]FileSignature {
         "ELF Executable",
         .Elf), 
 
+    createFileSignature(
+        &[_]u8{ 0x4F, 0x41, 0x52 }, 
+        "OAR file.",
+        .Oar), 
 };
 
 // Base:
