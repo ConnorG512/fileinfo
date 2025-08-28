@@ -46,7 +46,7 @@ pub fn main() !void {
         const file_paths_start = comptime 1;
         for (std.os.argv[file_paths_start..]) |current_file| {
 
-            try FileReader.scanForFileSignature(current_file);
+            try FileReader.scanAndPrintFileSigPath(current_file);
             try FileStats.startFileSize(current_file);
         }
     }

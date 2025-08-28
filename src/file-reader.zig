@@ -3,7 +3,7 @@ const FileSignatures = @import("file-signatures.zig");
 
 pub const FileReader = struct {
 
-    pub fn scanForFileSignature(current_file_path: [*:0]const u8) !void {
+    pub fn scanAndPrintFileSigPath(current_file_path: [*:0]const u8) !void {
         const file_buffer_size: u8 = comptime 64;
         var file_buffer: [file_buffer_size]u8 = undefined; 
 
