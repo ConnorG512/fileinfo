@@ -11,8 +11,9 @@ pub const FileReader = struct {
         
         try readFileSignatureBytes(&file_descriptor, &file_buffer);
 
-        const found_file_type = determineFileSignature(&file_buffer);
+        try printFilePath(current_file_path);
 
+        const found_file_type = determineFileSignature(&file_buffer);
         try printFileType(found_file_type);
     }
 
@@ -23,7 +24,7 @@ pub const FileReader = struct {
 
     fn readFileSignatureBytes(file_descriptor: *const usize, read_buffer: []u8) !void {
         const num_bytes_read = std.os.linux.read(@intCast(file_descriptor.*), read_buffer.ptr, read_buffer.len);
-        std.log.debug("{X}", .{read_buffer[0..]});
+        std.log.debug("{X} ", .{read_buffer[0..]});
         std.log.debug("Num bytes read: {d}.", .{num_bytes_read});
     }
 
@@ -50,5 +51,14 @@ pub const FileReader = struct {
                 try stdout.flush();
             }
         }
+    }
+
+    fn printFilePath(current_file_path: [*:0]const u8) !void {
+        var stdout_buffer: [256]u8 = undefined;
+        var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+        const stdout = &stdout_writer.interface;
+
+        try stdout.print("File: {s}\n", .{current_file_path});
+        try stdout.flush();
     }
 };
