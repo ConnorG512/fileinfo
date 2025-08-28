@@ -35,7 +35,7 @@ pub const FileStats = struct {
         try stdout.print("File Size\n", .{});
         try stdout.print("\t{d}(Bytes)\n", .{file_sizes.*.bytes});
         try stdout.print("\t{d:.2}(KiB)\n", .{file_sizes.*.kib});
-        try stdout.print("\t{d:.2}(MiB)\n", .{file_sizes.*.mib});
+        try stdout.print("\t{d:.2}(MiB)\n\n", .{file_sizes.*.mib});
         try stdout.flush();
     }
 };
