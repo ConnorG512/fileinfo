@@ -49,6 +49,11 @@ fn createFileSignature(
 pub const file_signatures_array = [_]FileSignature {
 
     createFileSignature(
+        &[_]u8{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }, 
+        "Unknown file format.", 
+        .Unknown),
+    
+    createFileSignature(
         &[_]u8{ 0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A }, 
         "PNG (Portable Network Graphics)",
         .PNG),
@@ -182,11 +187,5 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x72, 0x65, 0x67, 0x66 }, 
         "Windows Registry (dat/hiv)", 
         .WinReg),
+
 };
-
-// Base:
-pub const unknown_format: FileSignature = createFileSignature(
-    &[_]u8{ 0xAA, 0xBB, 0xCC, 0xDD, 0xEE, 0xFF }, 
-    "Unknown",
-    .Unknown);
-
