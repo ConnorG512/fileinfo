@@ -43,7 +43,11 @@ pub fn main() !void {
         try stdout.flush();
     }
     if (activated_flags.open == 1) {
-        try FileReader.scanForFileSignature();
-        try FileStats.startFileSize();
+        const file_paths_start = comptime 1;
+        for (std.os.argv[file_paths_start..]) |current_file| {
+
+            try FileReader.scanForFileSignature(current_file);
+            try FileStats.startFileSize(current_file);
+        }
     }
 }

@@ -10,18 +10,17 @@ const file_path_index = 1;
 
 pub const FileStats = struct {
 
-    pub fn startFileSize() !void {
+    pub fn startFileSize(current_file_path: [*:0]const u8) !void {
         var file_size_struct: FileSizes = .{};
 
-        try getFileStats(&file_size_struct);
+        try getFileStats(&file_size_struct, current_file_path);
         FileMath.calculateFileSize(&file_size_struct);
         try printFileSizeStats(&file_size_struct);
     } 
-    fn getFileStats(file_sizes: *FileSizes) !void {
-        const file_path: [*:0]const u8 = std.os.argv[file_path_index];
+    fn getFileStats(file_sizes: *FileSizes, current_file_path: [*:0]const u8) !void {
         var file_stat: std.os.linux.Stat = undefined;
 
-        const result: usize = std.os.linux.stat(file_path, &file_stat);
+        const result: usize = std.os.linux.stat(current_file_path, &file_stat);
         if (result != 0) {
             return error.FailedToStat;
         }

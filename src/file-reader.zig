@@ -3,9 +3,11 @@ const FileSignatures = @import("file-signatures.zig");
 
 pub const FileReader = struct {
 
-    pub fn scanForFileSignature() !void {
-        var file_buffer: [32]u8 = undefined; 
-        const file_descriptor = openFile();
+    pub fn scanForFileSignature(current_file_path: [*:0]const u8) !void {
+        const file_buffer_size: u8 = comptime 64;
+        var file_buffer: [file_buffer_size]u8 = undefined; 
+
+        const file_descriptor = openFile(current_file_path);
         
         try readFileSignatureBytes(&file_descriptor, &file_buffer);
 
@@ -14,8 +16,8 @@ pub const FileReader = struct {
         try printFileType(found_file_type);
     }
 
-    fn openFile() usize {
-        const file_descriptor: usize = std.os.linux.open(std.os.argv[1], .{ .ACCMODE = .RDONLY }, 0);
+    fn openFile(current_file_path: [*:0]const u8) usize {
+        const file_descriptor: usize = std.os.linux.open(current_file_path[0..], .{ .ACCMODE = .RDONLY }, 0);
         return file_descriptor;
     }
 
