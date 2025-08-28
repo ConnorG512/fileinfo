@@ -32,6 +32,7 @@ pub const FileSignatureList = enum {
     TrueType,
     Grib,
     WinReg,
+    WinExec,
 };
 
 fn createFileSignature(
@@ -187,5 +188,10 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x72, 0x65, 0x67, 0x66 }, 
         "Windows Registry (dat/hiv)", 
         .WinReg),
+    
+    createFileSignature(
+        &[_]u8{ 0x4D, 0x5A }, 
+        "Windows / DOS executable file", 
+        .WinExec),
 
 };
