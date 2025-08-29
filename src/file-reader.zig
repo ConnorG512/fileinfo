@@ -7,7 +7,7 @@ pub const FileReader = struct {
         const file_buffer_size: u8 = comptime 64;
         var file_buffer: [file_buffer_size]u8 = undefined; 
 
-        const file_descriptor = openFile(current_file_path);
+        const file_descriptor = try openFile(current_file_path);
         
         try readFileSignatureBytes(&file_descriptor, &file_buffer);
 
@@ -17,8 +17,11 @@ pub const FileReader = struct {
         try printFileType(found_file_type);
     }
 
-    fn openFile(current_file_path: [*:0]const u8) usize {
+    fn openFile(current_file_path: [*:0]const u8) !usize {
         const file_descriptor: usize = std.os.linux.open(current_file_path[0..], .{ .ACCMODE = .RDONLY }, 0);
+        if (@as(isize, @bitCast(file_descriptor)) < 0) {
+            return error.FailedToOpenFile;
+        }
         return file_descriptor;
     }
 
