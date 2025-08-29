@@ -1,8 +1,9 @@
 const std = @import("std");
 
 const CommandParser = @import("command-parser.zig").CommandParser;
-const ActivatedFlags = @import("command-parser.zig").ActivatedFlags;
-const FlagList = @import("command-parser.zig").AvailableFlags;
+const FlagState = @import("command-parser.zig").FlagState;
+const AvailableFlags = @import("command-parser.zig").AvailableFlags;
+
 const FileStats = @import("file-stats.zig").FileStats;
 const FileMath = @import("file-size-math.zig").FileMath;
 const FileReader = @import("file-reader.zig").FileReader;
@@ -29,25 +30,23 @@ pub fn main() !void {
         }
     };
 
-    var activated_flags: ActivatedFlags = .{};
-    CommandParser.parseCommandFlags(&activated_flags);
-
     // Execute commands.
-    if (activated_flags.help == 1) {
-        const flag_list: FlagList = .{};
+    const available_flags: AvailableFlags = .{};
+    switch (CommandParser.parseHelperFlag(&available_flags)) {
+        .Open => {
+            const file_paths_start = comptime 1;
+            for (std.os.argv[file_paths_start..]) |current_file| {
 
-        try stdout.print("Available commands\n", .{});
-        try stdout.print("\t{s} {s}\n", .{flag_list.help_short, flag_list.help});
-        try stdout.print("\t{s}\n", .{flag_list.version});
-
-        try stdout.flush();
+                try FileReader.scanAndPrintFileSigPath(current_file);
+                try FileStats.startFileSize(current_file);
+            }
+        },
+        .Help => {
+            try available_flags.printHelpFlag();
+        },
+        .Version => {
+            try AvailableFlags.printVersionFlag();
+        },
     }
-    if (activated_flags.open == 1) {
-        const file_paths_start = comptime 1;
-        for (std.os.argv[file_paths_start..]) |current_file| {
 
-            try FileReader.scanAndPrintFileSigPath(current_file);
-            try FileStats.startFileSize(current_file);
-        }
-    }
 }

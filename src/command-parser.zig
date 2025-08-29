@@ -6,16 +6,36 @@ const ParserError = error {
     UnknownFlag,
 };
 
+pub const FlagState = enum {
+    Help,
+    Version,
+    Open,
+};
+
 pub const AvailableFlags = struct {
     help: []const u8 = "--help",
     help_short: []const u8 = "-h",
     version: []const u8 = "--version",
-};
 
-pub const ActivatedFlags = packed struct {
-    help: u1 = 0,
-    version: u1 = 0,
-    open: u1 = 0,
+    pub fn printHelpFlag(self: *const AvailableFlags) !void {
+        var stdout_buffer: [64]u8 = undefined;
+        var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+        const stdout = &stdout_writer.interface;
+        
+        try stdout.print("Available commands\n", .{});
+        try stdout.print("\t{s} {s}\n", .{self.help_short, self.help});
+        try stdout.print("\t{s}\n", .{self.version});
+        try stdout.flush();
+    }
+
+    pub fn printVersionFlag() !void {
+        var stdout_buffer: [64]u8 = undefined;
+        var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+        const stdout = &stdout_writer.interface;
+        
+        try stdout.print("Version: 0.0.1\n", .{});
+        try stdout.flush();
+    }
 };
 
 pub const CommandParser = struct {
@@ -34,33 +54,22 @@ pub const CommandParser = struct {
         }
     }
 
-    pub fn parseCommandFlags(active_flags: *ActivatedFlags) void {
-
-        if (parseHelperFlag(active_flags)) { return; }
-        active_flags.*.open = 1;
-    }
-
-    fn parseHelperFlag(active_flags: *ActivatedFlags) bool {
-        const flag_list: AvailableFlags = .{};
+    pub fn parseHelperFlag(command_flags: *const AvailableFlags) FlagState {
 
         // argument 0 is always the exec path, so ignore it and start from index 1..
         const first_argument: [*:0]const u8 = std.os.argv[1];
 
-        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), flag_list.version)) {
-            active_flags.*.version = 1;
-            std.log.debug("(parseCommandFlags) {s} hit!", .{flag_list.version});
-            return true;
+        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), command_flags.*.version)) {
+            return .Version;
         }
-        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), flag_list.help_short)) {
-            active_flags.*.help = 1;
-            std.log.debug("(parseCommandFlags) {s} hit!", .{flag_list.help_short});
-            return true;
+        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), command_flags.*.help_short)) {
+            return .Help;
         }
-        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), flag_list.help)) {
-            active_flags.*.help = 1;
-            std.log.debug("(parseCommandFlags) {s} hit!", .{flag_list.help});
-            return true;
+        if (std.mem.eql(u8, std.mem.sliceTo(first_argument, 0), command_flags.*.help)) {
+            return .Help;
         }
-        return false;
+
+        // Returns Open if none of the flags are matched.
+        return .Open;
     }
 };
