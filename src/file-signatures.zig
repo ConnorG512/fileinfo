@@ -37,6 +37,7 @@ pub const FileSignatureList = enum {
     WinDisk,
     AppleAV,
     FlicAnim,
+    MsDevStudio,
 };
 
 fn createFileSignature(
@@ -217,4 +218,9 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x00, 0x11 }, 
         "FLIC Animation (fli)", 
         .FlicAnim),
+    
+    createFileSignature(
+        &[_]u8{ 0x23, 0x20, 0x4D, 0x69, 0x63, 0x72, 0x6F, 0x73 }, 
+        "Microsoft Developer Studio file (dsp)", 
+        .MsDevStudio),
 };
