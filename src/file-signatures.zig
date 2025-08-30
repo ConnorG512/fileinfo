@@ -35,6 +35,7 @@ pub const FileSignatureList = enum {
     WinExec,
     Bmp,
     WinDisk,
+    AppleAV,
 };
 
 fn createFileSignature(
@@ -206,4 +207,8 @@ pub const file_signatures_array = [_]FileSignature {
         "Windows Disk Image (tbi)", 
         .WinDisk),
 
+    createFileSignature(
+        &[_]u8{ 0x00, 0x00, 0x00, 0x20, 0x66, 0x74, 0x79, 0x70, 0x4D, 0x34, 0x41 }, 
+        "Apple Audio / Video file", 
+        .AppleAV),
 };
