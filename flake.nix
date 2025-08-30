@@ -21,5 +21,32 @@
     shellHook = ''
     echo "Entering shell..."
     '';
+    
+    # Building package - nix build
+    packages.${system}.default = pkgs.stdenv.mkDerivation {
+        pname = "fileinfo";
+        version = "0.0.1";
+        
+        # Source in current directory.
+        src = ./.;
+        nativeBuildInputs = [ pkgs.zig_0_15 ];
+
+        buildPhase = ''
+            echo "--- Start build phase"
+
+            zig build -Doptimize=ReleaseFast --global-cache-dir $TMPDIR/zig-cache
+            
+            echo "--- End build phase"
+        '';
+
+        installPhase = ''
+            echo "--- Start install phase"
+
+            mkdir -p $out/bin
+            cp zig-out/bin/fileinfo $out/bin/
+            
+            echo "--- End install phase"
+        '';
+    };
   };
 }
