@@ -34,6 +34,7 @@ pub const FileSignatureList = enum {
     WinReg,
     WinExec,
     Bmp,
+    WinDisk,
 };
 
 fn createFileSignature(
@@ -199,5 +200,10 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x42, 0x4D }, 
         "Bitmap Image (bmp)", 
         .Bmp),
+    
+    createFileSignature(
+        &[_]u8{ 0x00, 0x00, 0x00, 0x00, 0x14, 0x00, 0x00, 0x00 }, 
+        "Windows Disk Image (tbi)", 
+        .WinDisk),
 
 };
