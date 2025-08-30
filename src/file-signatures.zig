@@ -38,6 +38,7 @@ pub const FileSignatureList = enum {
     AppleAV,
     FlicAnim,
     MsDevStudio,
+    FuzzyBitmap,
 };
 
 fn createFileSignature(
@@ -223,4 +224,9 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x23, 0x20, 0x4D, 0x69, 0x63, 0x72, 0x6F, 0x73 }, 
         "Microsoft Developer Studio file (dsp)", 
         .MsDevStudio),
+    
+    createFileSignature(
+        &[_]u8{ 0x25, 0x62, 0x69, 0x74, 0x6D, 0x61, 0x70 }, 
+        "Fuzzy Bitmap file (fbm)", 
+        .FuzzyBitmap),
 };
