@@ -21,7 +21,6 @@
       echo "Entering shell..."
       '';
     };
-
     
     # Building package - nix build
     packages.${system}.default = pkgs.stdenv.mkDerivation {
