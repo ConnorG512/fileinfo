@@ -36,6 +36,7 @@ pub const FileSignatureList = enum {
     Bmp,
     WinDisk,
     AppleAV,
+    FlicAnim,
 };
 
 fn createFileSignature(
@@ -209,6 +210,11 @@ pub const file_signatures_array = [_]FileSignature {
 
     createFileSignature(
         &[_]u8{ 0x00, 0x00, 0x00, 0x20, 0x66, 0x74, 0x79, 0x70, 0x4D, 0x34, 0x41 }, 
-        "Apple Audio / Video file", 
+        "Apple Audio / Video file (m4a)", 
         .AppleAV),
+    
+    createFileSignature(
+        &[_]u8{ 0x00, 0x11 }, 
+        "FLIC Animation (fli)", 
+        .FlicAnim),
 };
