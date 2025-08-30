@@ -240,6 +240,30 @@ pub const file_signatures_array = [_]FileSignature {
         "Microsoft C++ Debug file (pdb)"),
     
     createFileSignature(
-        &[_]u8{ 0x50, 0x4B, 0x03, 0x04, 0x14, 0x00, 0x08, 0x00, }, 
+        &[_]u8{ 0x50, 0x4B, 0x03, 0x04, 0x14, 0x00, 0x08, 0x00 }, 
         "Java archive (jar)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x5F, 0x27, 0xA8, 0x89 }, 
+        "Jar archive (jar)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x6C, 0x33, 0x33, 0x6C }, 
+        "Skype user data (dbb)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x6F, 0x3C }, 
+        "SMS Text (SIM)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x7B, 0x0D, 0x0A, 0x6F, 0x20 }, 
+        "Windows application log (lgc/lgd)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x50, 0x4B, 0x03, 0x04 }, 
+        "Android package (apk)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x4D, 0x54, 0x68, 0x64 }, 
+        "MIDI sound file (mid/midi)"),
 };
