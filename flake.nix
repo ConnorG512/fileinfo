@@ -43,7 +43,7 @@
             echo "--- Start install phase"
 
             mkdir -p $out/bin
-            cp zig-out/bin/fileinfo $out/bin/
+            cp zig-out/bin/filesz $out/bin/
             
             echo "--- End install phase"
         '';
