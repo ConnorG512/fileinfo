@@ -266,4 +266,8 @@ pub const file_signatures_array = [_]FileSignature {
     createFileSignature(
         &[_]u8{ 0x4D, 0x54, 0x68, 0x64 }, 
         "MIDI sound file (mid/midi)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x47, 0x40, 0x00, 0x10 }, 
+        "Transport video stream (ts)"),
 };
