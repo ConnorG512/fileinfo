@@ -33,6 +33,7 @@ pub const FileSignatureList = enum {
     Grib,
     WinReg,
     WinExec,
+    Bmp,
 };
 
 fn createFileSignature(
@@ -193,5 +194,10 @@ pub const file_signatures_array = [_]FileSignature {
         &[_]u8{ 0x4D, 0x5A }, 
         "Windows / DOS executable file", 
         .WinExec),
+    
+    createFileSignature(
+        &[_]u8{ 0x42, 0x4D }, 
+        "Bitmap Image (bmp)", 
+        .Bmp),
 
 };
