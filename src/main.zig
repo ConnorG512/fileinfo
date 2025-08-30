@@ -48,5 +48,4 @@ pub fn main() !void {
             try AvailableFlags.printVersionFlag();
         },
     }
-
 }
