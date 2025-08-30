@@ -13,8 +13,8 @@ pub const FileReader = struct {
 
         try printFilePath(current_file_path);
 
-        const found_file_type = determineFileSignature(&file_buffer);
-        try printFileType(found_file_type);
+        const found_file_description = determineFileSignature(&file_buffer);
+        try printFileType(found_file_description);
     }
 
     fn openFile(current_file_path: [*:0]const u8) !usize {
@@ -31,29 +31,26 @@ pub const FileReader = struct {
         std.log.debug("Num bytes read: {d}.", .{num_bytes_read});
     }
 
-    fn determineFileSignature(file_buffer: []const u8) FileSignatures.FileSignatureList {
+    fn determineFileSignature(file_buffer: []const u8) []const u8 {
 
         for (FileSignatures.file_signatures_array) |current_signature| {
             if (std.mem.eql(u8, file_buffer[0..current_signature.signature.len], current_signature.signature)) {
                 std.log.debug("(determineFileSignature) {s} hit!", .{current_signature.name});
-                return current_signature.file_type;
+                return current_signature.name;
             }
         }
 
-        return FileSignatures.FileSignatureList.Unknown;
+        // If signature is not found.
+        return "Unknown file";
     }
 
-    fn printFileType(file_type_found: FileSignatures.FileSignatureList) !void {
-        for (FileSignatures.file_signatures_array) |current_signature| {
-            if (file_type_found == current_signature.file_type) {
-                var stdout_buffer: [64]u8 = undefined;
-                var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
-                const stdout = &stdout_writer.interface;
+    fn printFileType(file_description: []const u8) !void {
+        var stdout_buffer: [128]u8 = undefined;
+        var stdout_writer = std.fs.File.stdout().writer(&stdout_buffer);
+        const stdout = &stdout_writer.interface;
 
-                try stdout.print("File Type: {s}\n", .{current_signature.name});
-                try stdout.flush();
-            }
-        }
+        try stdout.print("File Type: {s}\n", .{file_description});
+        try stdout.flush();
     }
 
     fn printFilePath(current_file_path: [*:0]const u8) !void {
