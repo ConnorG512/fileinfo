@@ -154,4 +154,92 @@ pub const file_signatures_array = [_]FileSignature {
     createFileSignature(
         &[_]u8{ 0x25, 0x62, 0x69, 0x74, 0x6D, 0x61, 0x70 }, 
         "Fuzzy Bitmap file (fbm)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x38, 0x42, 0x50, 0x53 }, 
+        "Photoshop document (psd)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x3F, 0x5F, 0x03, 0x00 }, 
+        "Windows help file (gid/hlp)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x43, 0x44, 0x30, 0x30, 0x31 }, 
+        "ISO-9660 CD disc image (iso)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x43, 0x49, 0x53, 0x4F }, 
+        "Compressed ISO CD disc image (cso)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x44, 0x56, 0x44 }, 
+        "DVD info file (ifo)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x23, 0x3F, 0x52, 0x41, 0x44, 0x49, 0x41, 0x4E }, 
+        "Radiance HDR image file (hdr)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x28, 0x54, 0x68, 0x69, 0x73, 0x20, 0x66, 0x69 }, 
+        "BinHex 4 compressed archive (hqx)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x0A, 0x16, 0x6F, 0x72, 0x67, 0x2E, 0x62, 0x69, 0x74, 0x63, 0x6F, 0x69, 0x6E, 0x2E, 0x70, 0x72 }, 
+        "Multibit BitCoin wallet (wallet)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x0D, 0x44, 0x4F, 0x43 }, 
+        "DeskMate Document file (doc)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x80, 0x2A, 0x5F, 0xD7 }, 
+        "Kodak Cineon image (cin)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x00, 0x00, 0x00, 0x14, 0x66, 0x74, 0x79, 0x70 }, 
+        "3GPP Multimedia file (3gg/3gp/3g2)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x00, 0x00, 0x49, 0x49, 0x58, 0x50, 0x52 }, 
+        "Quark Express Intel (qxd)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x00, 0x00, 0x4D, 0x4D, 0x58, 0x50, 0x52 }, 
+        "Quark Express Motorola (qxd)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x01, 0x0F, 0x00, 0x00 }, 
+        "SQL Database (mdf)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x42, 0x44, 0x69, 0x63 }, 
+        "Google Chrome dictionary file (bdic)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x43, 0x23, 0x2B, 0x44, 0xA4, 0x43, 0x4D, 0xA5 }, 
+        "Ragtime Document (rtd)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x43, 0x4D, 0x58, 0x31 }, 
+        "Corel Binary metafile (clb)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x43, 0x50, 0x54, 0x46, 0x49, 0x4C, 0x45 }, 
+        "Corel Photopaint file (cpt)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x43, 0x72, 0x32, 0x34 }, 
+        "Google Chrome extension (crx)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x43, 0x72, 0x4F, 0x44 }, 
+        "Google Chromium patch update (crx)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x4D, 0x69, 0x63, 0x72, 0x6F, 0x73, 0x6F, 0x66, 0x74, 0x20, 0x43, 0x2F, 0x43, 0x2B, 0x2B, 0x20 }, 
+        "Microsoft C++ Debug file (pdb)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x50, 0x4B, 0x03, 0x04, 0x14, 0x00, 0x08, 0x00, }, 
+        "Java archive (jar)"),
 };
