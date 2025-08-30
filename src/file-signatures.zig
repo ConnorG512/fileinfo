@@ -270,4 +270,8 @@ pub const file_signatures_array = [_]FileSignature {
     createFileSignature(
         &[_]u8{ 0x47, 0x40, 0x00, 0x10 }, 
         "Transport video stream (ts)"),
+    
+    createFileSignature(
+        &[_]u8{ 0x52, 0x50, 0x47, 0x4D, 0x56 }, 
+        "RPG Maker MV file (rpgmpv/rpgmvo)"),
 };
