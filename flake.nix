@@ -16,11 +16,12 @@
         zig_0_15
         lldb
       ];
+
+      shellHook = ''
+      echo "Entering shell..."
+      '';
     };
 
-    shellHook = ''
-    echo "Entering shell..."
-    '';
     
     # Building package - nix build
     packages.${system}.default = pkgs.stdenv.mkDerivation {
