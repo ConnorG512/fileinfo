@@ -24,7 +24,7 @@
     
     # Building package - nix build
     packages.${system}.default = pkgs.stdenv.mkDerivation {
-        pname = "fileinfo";
+        pname = "filesz";
         version = "0.0.1";
         
         # Source in current directory.
